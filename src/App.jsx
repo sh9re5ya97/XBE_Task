@@ -101,6 +101,14 @@ function App() {
                 
               </tr>
             ))}
+            <tr>
+              <td className="border px-4 py-2 font-bold">Total:</td>
+              <td className="border px-4 py-2 font-bold">${crewSchedules.reduce((total, schedule) => {
+      return total + schedule.costPerHour;
+    }, 0)}</td>
+              <td className="border px-4 py-2"></td>
+              <td className="border px-4 py-2"></td>
+            </tr>
           </tbody>
         </table>
       </div>
