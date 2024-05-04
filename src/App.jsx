@@ -28,9 +28,18 @@ const crewTypes = [
 
 function App() {
   const [selectedCrewType, setSelectedCrewType] = useState(crewTypes[0]);
+  const [crewSchedules, setCrewSchedules] = useState([]);
 
    const handleCrewTypeChange = (e) => {
     setSelectedCrewType(crewTypes.find((type)=>type.id===e.target.value));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Add crew schedule
+    setCrewSchedules([...crewSchedules, selectedCrewType]);
+    // Reset selected crew type
+    setSelectedCrewType(crewTypes[0]);
   };
   return (
     <>
@@ -40,7 +49,7 @@ function App() {
       {/* Crew Schedule Input Section */}
       <div className="mb-8">
         <h2 className="text-xl font-semibold mb-2">Crew Schedule Input</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="flex items-center mb-4">
             <label className="mr-2">Crew Type:</label>
             <select id="crewType" className="border rounded px-2 py-1"  value={selectedCrewType} onChange={handleCrewTypeChange}>
@@ -71,6 +80,8 @@ function App() {
         </div>
       
       {/* Labor Cost Display Section */}
+      <h2 className="text-xl font-semibold mb-2">Crew Schedule Input</h2>
+      {/* <div>{crewSchedules}</div> */}
       {/* Insights and Metrics Section */}
     </div>
     </>
