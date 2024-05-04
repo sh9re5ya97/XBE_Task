@@ -39,11 +39,26 @@ function App() {
     // Add crew schedule
     const startTime = e.target.elements.startTime.value;
     const endTime = e.target.elements.endTime.value;
-    // Add crew schedule
-    setCrewSchedules([...crewSchedules, { ...selectedCrewType, startTime, endTime }]);
-   
+    const schedule={...selectedCrewType, startTime, endTime}
+    schedule.totalCost=calculateCostForType(schedule)
+    setCrewSchedules([...crewSchedules,  schedule ]);
     // Reset selected crew type
     setSelectedCrewType(crewTypes[0]);
+  };
+
+  const calculateCostForType = (Type) => {
+    // Calculate duration in hours
+    const currentDate = new Date(); 
+    const startTime = new Date(currentDate.toDateString() + ' ' + Type.startTime);
+    const endTime = new Date(currentDate.toDateString() + ' ' + Type.endTime);
+    const durationInMs = endTime - startTime;
+    const durationInHours = durationInMs / (1000 * 60 * 60);
+  
+    // Calculate cost for this Type
+    const costForType = durationInHours * Type.costPerHour;
+  
+    // return costForType.toFixed(2);
+    return costForType;
   };
   return (
     <>
@@ -94,6 +109,7 @@ function App() {
               <th className="px-4 py-2">Cost Per Hour</th>
               <th className="px-4 py-2">Start Time</th>
               <th className="px-4 py-2">End Time</th>
+              <th className="px-4 py-2">Total Cost</th>
             </tr>
           </thead>
           <tbody>
@@ -103,16 +119,18 @@ function App() {
                 <td className="border px-4 py-2">${schedule.costPerHour}</td>
                 <td className="border px-4 py-2">{schedule.startTime}</td>
                 <td className="border px-4 py-2">{schedule.endTime}</td>
+                <td className="border px-4 py-2">${schedule.totalCost}</td>
                 
               </tr>
             ))}
             <tr>
               <td className="border px-4 py-2 font-bold">Total:</td>
+              <td className="border px-4 py-2"></td>
+              <td className="border px-4 py-2"></td>
+              <td className="border px-4 py-2"></td>
               <td className="border px-4 py-2 font-bold">${crewSchedules.reduce((total, schedule) => {
-      return total + schedule.costPerHour;
-    }, 0)}</td>
-              <td className="border px-4 py-2"></td>
-              <td className="border px-4 py-2"></td>
+              return total + schedule.totalCost;
+              }, 0)}</td>
             </tr>
           </tbody>
         </table>
