@@ -44,10 +44,12 @@ function App() {
   return (
     <>
       <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-4">Labor Cost Calculator</h1>
+        <div className='bg-blue-100 px-2 py-1 rounded' >
+      <h1 className="text-3xl font-bold">Labor Cost Calculator</h1>
+        </div>
 
       {/* Crew Schedule Input Section */}
-      <div className="mb-8">
+      <div className="mb-8 px-1">
         <h2 className="text-xl font-semibold mb-2">Crew Schedule Input</h2>
         <form onSubmit={handleSubmit}>
           <div className="flex items-center mb-4">
@@ -80,8 +82,28 @@ function App() {
         </div>
       
       {/* Labor Cost Display Section */}
-      <h2 className="text-xl font-semibold mb-2">Crew Schedule Input</h2>
-      {/* <div>{crewSchedules}</div> */}
+      <div>
+        <h2 className="text-xl font-semibold mb-2">Selected Crew Schedules</h2>
+        <table className="table-auto">
+          <thead>
+            <tr>
+              <th className="px-4 py-2">Crew Type</th>
+              <th className="px-4 py-2">Cost Per Hour</th>
+              <th className="px-4 py-2">Skills</th>
+            </tr>
+          </thead>
+          <tbody>
+            {crewSchedules.map((schedule, index) => (
+              <tr key={index}>
+                <td className="border px-4 py-2">{schedule.type}</td>
+                <td className="border px-4 py-2">${schedule.costPerHour}</td>
+                <td className="border px-4 py-2">{schedule.skills.join(', ')}</td>
+                
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {/* Insights and Metrics Section */}
     </div>
     </>
