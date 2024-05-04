@@ -37,7 +37,11 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add crew schedule
-    setCrewSchedules([...crewSchedules, selectedCrewType]);
+    const startTime = e.target.elements.startTime.value;
+    const endTime = e.target.elements.endTime.value;
+    // Add crew schedule
+    setCrewSchedules([...crewSchedules, { ...selectedCrewType, startTime, endTime }]);
+   
     // Reset selected crew type
     setSelectedCrewType(crewTypes[0]);
   };
@@ -74,7 +78,6 @@ function App() {
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Selected Crew Type: {selectedCrewType.type}</h2>
           <p>Cost Per Hour: ${selectedCrewType.costPerHour}</p>
-          {/* <p>Skills: {selectedCrewType.skills.join(', ')}</p> */}
         </div>
       )}
           <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Add Crew Schedule</button>
@@ -89,7 +92,8 @@ function App() {
             <tr>
               <th className="px-4 py-2">Crew Type</th>
               <th className="px-4 py-2">Cost Per Hour</th>
-              <th className="px-4 py-2">Skills</th>
+              <th className="px-4 py-2">Start Time</th>
+              <th className="px-4 py-2">End Time</th>
             </tr>
           </thead>
           <tbody>
@@ -97,7 +101,8 @@ function App() {
               <tr key={index}>
                 <td className="border px-4 py-2">{schedule.type}</td>
                 <td className="border px-4 py-2">${schedule.costPerHour}</td>
-                <td className="border px-4 py-2">{schedule.skills.join(', ')}</td>
+                <td className="border px-4 py-2">{schedule.startTime}</td>
+                <td className="border px-4 py-2">{schedule.endTime}</td>
                 
               </tr>
             ))}
